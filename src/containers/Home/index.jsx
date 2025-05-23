@@ -1,41 +1,34 @@
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';  // importe o CSS do Swiper
-import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { Background, Container, Info, Poster, ContainerButtons } from './styles';
+import Button from '../../components/Button';
+import Slider from '../../components/Slider';
 
-import { Background, Container, Info, Poster } from './styles'; // seus styled-components
+function Home() {
+  const navigate = useNavigate();
 
-function Home({ featuredMovie }) {
+  const data = [
+    { id: 1, title: 'Filme 1', image: '/images/filme1.jpg' },
+    { id: 2, title: 'Filme 2', image: '/images/filme2.jpg' },
+    { id: 3, title: 'Filme 3', image: '/images/filme3.jpg' },
+  ];
+
   return (
-    <Background img={`https://image.tmdb.org/t/p/original${featuredMovie.backdrop_path}`}>
+    <Background img="/images/capa.jpg">
       <Container>
         <Info>
-          <h1>{featuredMovie.title}</h1>
-          <p>{featuredMovie.overview}</p>
-          {/* seus botões, descrições etc */}
+          <h1>Bem-vindo à Pierot Films</h1>
+          <p>Assista aos melhores filmes, séries e documentários exclusivos da nossa plataforma.</p>
+
+          <ContainerButtons>
+            <Button onClick={() => navigate('/assistir')}>Assistir agora</Button>
+            <Button onClick={() => navigate('/detalhes')}>Ver detalhes</Button>
+          </ContainerButtons>
         </Info>
 
         <Poster>
-          <img src={`https://image.tmdb.org/t/p/w500${featuredMovie.poster_path}`} alt={featuredMovie.title} />
+          <img src="/images/poster.png" alt="Poster do Filme" />
         </Poster>
       </Container>
-
-      {/* Exemplo de slider usando Swiper configurado */}
-      <Swiper
-        grabCursor
-        spaceBetween={10}
-        slidesPerView={1}  // mostrar 1 slide no mobile
-        loop={true}        // loop infinito evita fim e fundo preto
-        breakpoints={{
-          768: {
-            slidesPerView: 'auto',  // muda para automático em telas maiores
-          },
-        }}
-        className="swiper"
-      >
-        {/* Seus slides aqui */}
-        {/* Por exemplo: info.map(item => <SwiperSlide>...</SwiperSlide>) */}
-      </Swiper>
     </Background>
   );
 }
