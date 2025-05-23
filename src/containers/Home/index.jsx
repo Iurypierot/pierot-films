@@ -1,36 +1,89 @@
-import { useNavigate } from 'react-router-dom';
-import { Background, Container, Info, Poster, ContainerButtons } from './styles';
-import Button from '../../components/Button';
-import Slider from '../../components/Slider';
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import Button from '../../components/Button'
+import Modal from '../../components/Modal'
+import Slider from '../../components/Slider'
+import { 
+    getMovies, 
+    getPopularSeries, 
+    getTopMovies, 
+    getTopPeople, 
+    getTopSeries 
+} from '../../services/getData'
+import { getImages } from '../../utils/getImagens'
+import { Background, Container, ContainerButtons, Info, Poster } from './styles'
+
+
+
+
 
 function Home() {
-  const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false)
+    const [movie, setMovie] = useState()
+    const [topMovies, setTopMovies] = useState()
+    const [topSeries, setTopSeries] = useState()
+    const [popularSeries, setPopularSeries] = useState()
+    const [topPeople, setTopPeople] = useState()
+    const navigate = useNavigate()
 
-  const data = [
-    { id: 1, title: 'Filme 1', image: '/images/filme1.jpg' },
-    { id: 2, title: 'Filme 2', image: '/images/filme2.jpg' },
-    { id: 3, title: 'Filme 3', image: '/images/filme3.jpg' },
-  ];
+    useEffect(() => {
+        async function getAllData() {
+            Promise.all([
+            getMovies(),
+            getTopMovies(),
+            getTopSeries(),
+            getPopularSeries(),
+            getTopPeople(),
+        ])
+        .then(([movie, topMovies, topSeries, popularSeries, topPeople]) => {
+            setMovie(movie)
+            setTopMovies(topMovies)
+            setTopSeries(topSeries)
+            setPopularSeries(popularSeries)
+            setTopPeople(topPeople)
+        })
 
-  return (
-    <Background img="/images/capa.jpg">
-      <Container>
-        <Info>
-          <h1>Bem-vindo à Pierot Films</h1>
-          <p>Assista aos melhores filmes, séries e documentários exclusivos da nossa plataforma.</p>
+        .catch ((error) => console.error(error))
+        }
 
-          <ContainerButtons>
-            <Button onClick={() => navigate('/assistir')}>Assistir agora</Button>
-            <Button onClick={() => navigate('/detalhes')}>Ver detalhes</Button>
-          </ContainerButtons>
-        </Info>
+        getAllData()
+    }, [])
 
-        <Poster>
-          <img src="/images/poster.png" alt="Poster do Filme" />
-        </Poster>
-      </Container>
-    </Background>
-  );
+    return (
+        <>
+            {movie && (
+                <Background
+                    img={getImages(movie.backdrop_path)}>
+                    {showModal && (
+                        <Modal movieId={movie.id} setShowModal={setShowModal} />
+                    )}
+                    <Container>
+                        <Info>
+                            <h1>{movie.title}</h1>
+                            <p>{movie.overview}</p>
+                            <ContainerButtons>
+                                <Button red onClick={() => navigate(`/detalhe/${movie.id}`)}>Assista Agora</Button>
+                                <Button onClick={() => setShowModal(true)}>
+                                    Assista o Trailer
+                                </Button>
+                            </ContainerButtons>
+                        </Info>
+                        <Poster>
+                            <img
+                                alt="capa-do-filme"
+                                src={getImages(movie.poster_path)}
+                            />
+                        </Poster>
+                    </Container>
+                </Background>
+            )}
+            {topMovies && <Slider info={topMovies} title={'Top Filmes'} />}
+            {topSeries && <Slider info={topSeries} title={'Top Series'} />}
+            {popularSeries && <Slider info={popularSeries} title={'Séries Popular'} />}
+            {topPeople && <Slider info={topPeople} title={'Top Artistas'} />}
+        </>
+    )
 }
 
-export default Home;
+export default Home
