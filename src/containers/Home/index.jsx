@@ -1,18 +1,26 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { 
+    Background, 
+    Container, 
+    ContainerButtons, 
+    Info, 
+    Poster 
+} from './styles';
 
-import Button from '../../components/Button'
-import Modal from '../../components/Modal'
-import Slider from '../../components/Slider'
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import Button from '../../components/Button';
+import Modal from '../../components/Modal';
+import Slider from '../../components/Slider';
 import { 
     getMovies, 
     getPopularSeries, 
     getTopMovies, 
     getTopPeople, 
     getTopSeries 
-} from '../../services/getData'
-import { getImages } from '../../utils/getImagens'
-import { Background, Container, ContainerButtons, Info, Poster } from './styles'
+} from '../../services/getData';
+import { getImages } from '../../utils/getImagens';
+
 
 
 
