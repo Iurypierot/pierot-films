@@ -12,7 +12,10 @@ export default createGlobalStyle`
         
     }
 
-    body {
-        background: #000000;
-    }
+ body {
+    margin: 0;
+    padding: 0;
+    background-color: #000; /* Evita fundo preto ao quebrar */
+    overflow-x: hidden; /* Impede rolagem lateral */
+}
 `
