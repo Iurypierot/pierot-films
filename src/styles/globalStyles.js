@@ -18,4 +18,13 @@ export default createGlobalStyle`
     background-color: #000; /* Evita fundo preto ao quebrar */
     overflow-x: hidden; /* Impede rolagem lateral */
 }
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;  /* bloqueia scroll horizontal */
+  width: 100%;
+  height: 100%;
+}
+
 `

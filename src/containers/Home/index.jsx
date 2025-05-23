@@ -1,89 +1,43 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';  // importe o CSS do Swiper
+import styled from 'styled-components';
 
-import Button from '../../components/Button'
-import Modal from '../../components/Modal'
-import Slider from '../../components/Slider'
-import { 
-    getMovies, 
-    getPopularSeries, 
-    getTopMovies, 
-    getTopPeople, 
-    getTopSeries 
-} from '../../services/getData'
-import { getImages } from '../../utils/getImagens'
-import { Background, Container, ContainerButtons, Info, Poster } from './styles'
+import { Background, Container, Info, Poster } from './styles'; // seus styled-components
 
+function Home({ featuredMovie }) {
+  return (
+    <Background img={`https://image.tmdb.org/t/p/original${featuredMovie.backdrop_path}`}>
+      <Container>
+        <Info>
+          <h1>{featuredMovie.title}</h1>
+          <p>{featuredMovie.overview}</p>
+          {/* seus botões, descrições etc */}
+        </Info>
 
+        <Poster>
+          <img src={`https://image.tmdb.org/t/p/w500${featuredMovie.poster_path}`} alt={featuredMovie.title} />
+        </Poster>
+      </Container>
 
-
-
-function Home() {
-    const [showModal, setShowModal] = useState(false)
-    const [movie, setMovie] = useState()
-    const [topMovies, setTopMovies] = useState()
-    const [topSeries, setTopSeries] = useState()
-    const [popularSeries, setPopularSeries] = useState()
-    const [topPeople, setTopPeople] = useState()
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        async function getAllData() {
-            Promise.all([
-            getMovies(),
-            getTopMovies(),
-            getTopSeries(),
-            getPopularSeries(),
-            getTopPeople(),
-        ])
-        .then(([movie, topMovies, topSeries, popularSeries, topPeople]) => {
-            setMovie(movie)
-            setTopMovies(topMovies)
-            setTopSeries(topSeries)
-            setPopularSeries(popularSeries)
-            setTopPeople(topPeople)
-        })
-
-        .catch ((error) => console.error(error))
-        }
-
-        getAllData()
-    }, [])
-
-    return (
-        <>
-            {movie && (
-                <Background
-                    img={getImages(movie.backdrop_path)}>
-                    {showModal && (
-                        <Modal movieId={movie.id} setShowModal={setShowModal} />
-                    )}
-                    <Container>
-                        <Info>
-                            <h1>{movie.title}</h1>
-                            <p>{movie.overview}</p>
-                            <ContainerButtons>
-                                <Button red onClick={() => navigate(`/detalhe/${movie.id}`)}>Assista Agora</Button>
-                                <Button onClick={() => setShowModal(true)}>
-                                    Assista o Trailer
-                                </Button>
-                            </ContainerButtons>
-                        </Info>
-                        <Poster>
-                            <img
-                                alt="capa-do-filme"
-                                src={getImages(movie.poster_path)}
-                            />
-                        </Poster>
-                    </Container>
-                </Background>
-            )}
-            {topMovies && <Slider info={topMovies} title={'Top Filmes'} />}
-            {topSeries && <Slider info={topSeries} title={'Top Series'} />}
-            {popularSeries && <Slider info={popularSeries} title={'Séries Popular'} />}
-            {topPeople && <Slider info={topPeople} title={'Top Artistas'} />}
-        </>
-    )
+      {/* Exemplo de slider usando Swiper configurado */}
+      <Swiper
+        grabCursor
+        spaceBetween={10}
+        slidesPerView={1}  // mostrar 1 slide no mobile
+        loop={true}        // loop infinito evita fim e fundo preto
+        breakpoints={{
+          768: {
+            slidesPerView: 'auto',  // muda para automático em telas maiores
+          },
+        }}
+        className="swiper"
+      >
+        {/* Seus slides aqui */}
+        {/* Por exemplo: info.map(item => <SwiperSlide>...</SwiperSlide>) */}
+      </Swiper>
+    </Background>
+  );
 }
 
-export default Home
+export default Home;
