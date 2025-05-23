@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+// Detail.jsx
+import { useEffect, useState } from "react"; 
 import { useParams } from "react-router-dom";
 
 import Slider from "../../components/Slider";
@@ -44,7 +45,6 @@ function Detail() {
     const backdropImage = movie.backdrop_path ? getImages(movie.backdrop_path) : "fallback.jpg";
     const posterImage = movie.poster_path ? getImages(movie.poster_path) : "fallback.jpg";
 
-    // Verificando trailer
     const trailer = movieVideos?.length ? movieVideos[0] : null;
 
     return (

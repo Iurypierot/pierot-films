@@ -1,10 +1,11 @@
+// styles.js
 import styled from 'styled-components';
 
 export const Container = styled.div`
     display: flex;
     margin-top: 30px;
     gap: 10px;
-    flex-wrap: wrap; /* Isso vai permitir que os elementos dentro do Container quebrem para a linha seguinte em telas menores */
+    flex-wrap: wrap; /* permite quebrar para a próxima linha em telas pequenas */
 
     span {
         padding: 8px 18px;
@@ -18,10 +19,9 @@ export const Container = styled.div`
         align-items: center;
         justify-content: center;
 
-        /* Responsividade */
         @media (max-width: 768px) {
-            font-size: 10px;  /* Reduz o tamanho da fonte em telas menores */
-            padding: 6px 12px; /* Ajusta o padding para telas menores */
+            font-size: 10px;
+            padding: 6px 12px;
         }
     }
 `;

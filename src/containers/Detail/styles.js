@@ -1,13 +1,14 @@
-import styled, { keyframes }from "styled-components";
+// styles.js
+import styled, { keyframes } from "styled-components";
 
 const scale = keyframes`
     from {
-        transform: scale(0)
+        transform: scale(0);
     }
     to {
-        transform: scale(1)
+        transform: scale(1);
     }
-`
+`;
 
 export const Background = styled.div`
     background-image: url(${(props) => props.image});
@@ -38,10 +39,9 @@ export const Background = styled.div`
     }
 
     @media (max-width: 768px) {
-        height: 40vh; /* Menor altura em telas pequenas */
+        height: 40vh;
     }
 `;
-
 
 export const Container = styled.div`
     display: flex;
@@ -52,11 +52,10 @@ export const Container = styled.div`
     margin-top: -100px;
 
     @media (max-width: 768px) {
-        flex-direction: column;  /* Alinha os itens verticalmente em telas pequenas */
+        flex-direction: column;
         margin-top: 0;
     }
 `;
-
 
 export const Cover = styled.div`
    padding: 50px;
@@ -74,15 +73,13 @@ export const Cover = styled.div`
 
    @media (max-width: 768px) {
         img {
-            width: 50%;  /* Ajusta a largura da imagem em telas menores */
-            border-radius: 15px;  /* Ajuste do border-radius */
-            
+            width: 50%;
+            border-radius: 15px;
         }
 
-        padding: 20px;  /* Diminui o padding */
+        padding: 20px;
    }
 `;
-
 
 export const Info = styled.div`
     padding: 20px;
@@ -106,19 +103,18 @@ export const Info = styled.div`
     }
 
     @media (max-width: 768px) {
-        width: 100%;  /* Largura completa em telas menores */
-        padding: 10px;  /* Ajusta o padding */
-        
+        width: 100%;
+        padding: 10px;
+
         h2 {
-            font-size: 28px;  /* Tamanho da fonte menor */
+            font-size: 28px;
         }
 
         p {
-            font-size: 16px;  /* Tamanho da fonte para o parágrafo */
+            font-size: 16px;
         }
     }
 `;
-
 
 export const ContainerMovies = styled.div`
     display: flex;
@@ -146,19 +142,13 @@ export const ContainerMovies = styled.div`
 
     iframe {
         border: none;
-        width: 100%; /* Faz o iframe ocupar toda a largura disponível */
-        height: 400px; /* Ajuste de altura */
+        width: 100%;
+        height: 400px;
     }
 
     @media (max-width: 768px) {
         iframe {
-            height: 250px;  /* Ajuste a altura para telas menores */
+            height: 250px;
         }
     }
 `;
-
-
-
-
-
-
